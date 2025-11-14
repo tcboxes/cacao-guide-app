@@ -1,9 +1,10 @@
 import React from 'react';
+import { CacaoPodIcon } from './icons';
 
 const Spinner: React.FC = () => {
   return (
     <div className="flex justify-center items-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#e4d5b7]"></div>
+      <CacaoPodIcon className="w-10 h-10 text-[#e4d5b7] animate-soft-pulse" />
     </div>
   );
 };

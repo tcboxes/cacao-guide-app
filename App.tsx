@@ -6,10 +6,12 @@ import PreparationScreen from './components/PreparationScreen';
 import CeremonyFlow from './components/CeremonyFlow';
 import ClosingScreen from './components/ClosingScreen';
 import { CacaoPodIcon } from './components/icons';
+import AudioToggleButton from './components/AudioToggleButton';
 
 const App: React.FC = () => {
   const [screen, setScreen] = useState<Screen>(Screen.Welcome);
   const [intention, setIntention] = useState<string>('');
+
 
   const handleStart = () => {
     setScreen(Screen.Intention);
@@ -44,7 +46,7 @@ const App: React.FC = () => {
       case Screen.Ceremony:
         return <CeremonyFlow onComplete={handleCeremonyEnd} intention={intention} />;
       case Screen.Closing:
-        return <ClosingScreen onRestart={handleRestart} />;
+        return <ClosingScreen onRestart={handleRestart} intention={intention} />;
       default:
         return <WelcomeScreen onStart={handleStart} />;
     }
@@ -52,14 +54,17 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#4a3a32] text-[#fdf5e6] flex flex-col items-center p-4">
-        <header className="fixed top-0 left-0 w-full p-6 flex items-center justify-center z-10 bg-[#4a3a32]/80 backdrop-blur-sm">
+        <header className="fixed top-0 left-0 w-full p-6 flex items-center justify-between z-10 bg-[#4a3a32]/80 backdrop-blur-sm">
             <div className="flex items-center">
                 <CacaoPodIcon className="w-8 h-8 text-[#e4d5b7]" />
                 <h1 className="text-xl font-bold text-[#e4d5b7] ml-3 tracking-widest">Cacao Guide</h1>
             </div>
+            <AudioToggleButton />
         </header>
         <main className="w-full max-w-lg mx-auto flex-grow flex items-center justify-center pt-20 pb-28">
-            {renderScreen()}
+            <div key={screen} className="w-full">
+              {renderScreen()}
+            </div>
         </main>
         {intention && (screen === Screen.Preparation || screen === Screen.Ceremony || screen === Screen.Closing) && (
              <footer className="fixed bottom-0 left-0 w-full bg-[#4a3a32]/80 backdrop-blur-sm p-4 text-center border-t border-white/10 animate-fade-in z-10">

@@ -26,7 +26,7 @@ const PreparationScreen: React.FC<PreparationScreenProps> = ({ onReady }) => {
         </div>
         <button
             onClick={onReady}
-            className="mt-8 w-full bg-[#e4d5b7] text-[#4a3a32] font-bold py-3 px-6 rounded-lg hover:bg-white/90 transition-transform transform hover:scale-105"
+            className="mt-8 w-full bg-[#e4d5b7] text-[#4a3a32] font-bold py-3 px-6 rounded-lg hover:bg-white/90 transition-transform transform hover:scale-105 active:scale-95"
         >
           I am Ready
         </button>
