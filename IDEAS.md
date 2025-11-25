@@ -4,7 +4,7 @@ This document tracks potential future features and enhancements for the Ceremoni
 
 ---
 
-## Gentle Enhancements (Near-Term)
+## Gentle Enhancements
 
 These ideas could enrich the current experience without adding significant complexity.
 
@@ -14,14 +14,14 @@ These ideas could enrich the current experience without adding significant compl
 - **Keeping it simple:** Could be a simple on/off toggle in the header, with a few carefully selected, looping tracks.
 
 ### 2. Post-Ceremony Journalling Prompt
-- **The Idea:** On the final "Ceremony Complete" screen, offer a single, gentle prompt for reflection (e.g., "What one word describes how you feel now?").
-- **Why it's great:** Provides a concrete, optional way for the user to integrate their experience, actively supporting the "Reflection" step.
-- **Keeping it simple:** A simple, optional textarea. No need to save the user's input; it's just for their in-the-moment reflection. We could even use Gemini to generate a thoughtful prompt based on the user's intention.
+- **The Idea:** **[Implemented]** On the final "Ceremony Complete" screen, a textarea is provided with a gentle prompt: "What one word describes how you feel now?".
+- **Why it's great:** This offers a concrete, optional way for the user to integrate their experience, actively supporting the "Reflection" step.
+- **How it's implemented:** A simple, optional textarea is rendered on the `ClosingScreen.tsx` component. The user's input is not saved; it is purely for their in-the-moment reflection.
 
 ### 3. Intention-Based Pacing
-- **The Idea:** Slightly alter the text of one or two ceremony steps to reflect the user's chosen intention theme (e.g., 'Self-love', 'Creativity').
-- **Why it's great:** Makes the experience feel more personalised and reinforces the user's purpose for being there.
-- **Keeping it simple:** A small logic change to modify the description of a step like "Savour" or "Connect" based on the `intention` variable. It leverages existing data without complicating the UI.
+- **The Idea:** **[Implemented]** The descriptions for the 'Savour' and 'Connect' steps are now dynamically rewritten by the Gemini API to align with the user's specific intention.
+- **Why it's great:** This makes the experience feel more personalised and reinforces the user's purpose for being there.
+- **How it's implemented:** A `generatePersonalizedSteps` function in `geminiService.ts` handles the API call. The `CeremonyFlow.tsx` component shows a loading state while fetching the new text and then updates the step descriptions before the ceremony begins.
 
 ### 4. Continuous Audio-Guided Mode
 - **The Idea:** Offer a "play all" mode where the audio for each ceremony step plays automatically one after the other, with a gentle chime or pause in between.
@@ -29,23 +29,38 @@ These ideas could enrich the current experience without adding significant compl
 - **Keeping it simple:** This would be a toggle on the Preparation screen. It would use the existing text-to-speech functionality but trigger the next step automatically after the current audio finishes.
 
 ### 5. Dynamic Closing Affirmation
-- **The Idea:** On the "Ceremony Complete" screen, use Gemini to generate a short, personalised affirmation based on the user's specific intention for that session.
-- **Why it's great:** Makes the end of the ceremony feel incredibly personal and meaningful, reinforcing the user's purpose and leaving them with a powerful thought to carry forward.
-- **Keeping it simple:** A simple API call on the Closing Screen, displaying the generated text.
+- **The Idea:** **[Implemented]** On the "Ceremony Complete" screen, the Gemini API generates a short, personalised affirmation based on the user's specific intention.
+- **Why it's great:** This makes the end of the ceremony feel incredibly personal and meaningful, reinforcing the user's purpose and leaving them with a powerful thought to carry forward.
+- **How it's implemented:** The `ClosingScreen.tsx` component calls the `generateClosingAffirmation` function from the Gemini service. While the affirmation is being generated, a spinner is displayed to the user.
 
 ### 6. Saved Intentions History
-- **The Idea:** Allow users to save intentions they particularly resonate with, and select them from a personal list on the Intention Screen for future ceremonies.
+- **The Idea:** **[Implemented]** Users' intentions are automatically saved. On the Intention Screen, these are displayed as a list of "Past Intentions" that can be clicked to reuse or deleted.
 - **Why it's great:** Honours the user's personal journey and makes it quicker to begin a ceremony with a recurring theme.
-- **Keeping it simple:** Add a UI to display and manage saved intentions, leveraging the existing `useSavedIntentions` hook.
+- **How it's implemented:** The `useSavedIntentions.ts` custom hook manages saving to and retrieving from the browser's `localStorage`. The UI on `IntentionScreen.tsx` maps over this list to display clickable buttons.
 
 ### 7. Subtle Haptic Feedback
 - **The Idea:** Use gentle vibrations (haptics) on mobile devices to signal key moments, like transitioning between steps or at the start of a "deep breath" prompt.
 - **Why it's great:** A non-visual, non-auditory way to keep the user grounded and present, deepening the meditative state without requiring interaction with the screen.
 - **Keeping it simple:** Integrate with the Web Vibration API at key transition points in the `CeremonyFlow` component.
 
+### 8. Lunar Alignment (Cosmic Connection)
+- **The Idea:** Display a small, elegant icon showing the current moon phase (e.g., "Waxing Crescent") on the Welcome Screen.
+- **Why it's great:** Connects the brand to nature and ancient rhythms, reinforcing the natural philosophy of cacao without being overwhelming.
+- **Keeping it simple:** A calculated icon based on the current date, potentially with a small tooltip: "The moon is growing. A perfect time to invite new energy in."
+
+### 9. The Origin Story (Micro-Education)
+- **The Idea:** During the Preparation Screen (while shaking/smelling the bottle), display fading "Did you know?" text about the Balinese sourcing and Tri Hita Karana philosophy.
+- **Why it's great:** Subtly educates the user on the premium quality and ethical sourcing of the product, connecting the "Gratitude" step to the specific farmers.
+- **Keeping it simple:** A simple text carousel that cycles through 2-3 short facts while the user prepares.
+
+### 10. Mood-Based Ambience
+- **The Idea:** Subtle shifts in the background gradient based on the selected intention theme (e.g., warm amber for Creativity, deep earth for Grounding, soft rose for Self-love).
+- **Why it's great:** Creates a subliminal emotional connection and makes the app feel "alive" and responsive.
+- **Keeping it simple:** Use CSS transitions on the main background container that react to the `intention` or `theme` state.
+
 ---
 
-## Future Vision (Long-Term)
+## Future Vision
 
 These are larger ideas that represent a significant evolution of the app's capabilities.
 
@@ -60,19 +75,19 @@ These are larger ideas that represent a significant evolution of the app's capab
 - **Keeping it simple:** A subtle link on the welcome or closing screen. The page itself could be an elegant, vertically scrolling narrative with beautiful imagery, keeping it separate from the core ceremony flow.
 
 ### 3. Link to Website/Shop
-- **The Idea:** Provide a link for users to restock their cacao or explore other offerings.
-- **Why it's great:** Closes the loop for the business and provides a convenient path for users who have just had a positive experience with the product.
-- **Keeping it simple:** Place this on the **Closing Screen**. After the ceremony is complete, a tasteful button ("Restock Your Cacao" or "Explore Our Offerings") feels like a helpful suggestion rather than an aggressive ad.
+- **The Idea:** **[Implemented]** The Closing Screen now features an "Explore Our Offerings" button.
+- **Why it's great:** This provides a convenient, non-intrusive path for users to learn more after they've had a positive experience with the product.
+- **How it's implemented:** A button on `ClosingScreen.tsx` currently triggers a "Coming Soon!" message, which can be replaced with a live link when ready.
 
 ### 4. Social Media Connection
-- **The Idea:** Add a subtle link to the brand's Instagram profile on the closing screen.
-- **Why it's great:** Encourages community building and allows users to connect with the brand on a different platform, deepening their relationship beyond the app.
-- **Keeping it simple:** A simple Instagram icon link on the Closing Screen, perhaps next to a "Restock" button.
+- **The Idea:** **[Implemented]** A simple Instagram icon with the text "Follow the Journey" has been added to the Closing Screen.
+- **Why it's great:** This encourages community building and allows users to connect with the brand on a different platform, deepening their relationship beyond the app.
+- **How it's implemented:** This is a simple anchor tag (`<a>`) on the `ClosingScreen.tsx` component that can be pointed to the correct Instagram profile URL.
 
 ### 5. Visual Breath Pacer
-- **The Idea:** During the "Arrive" step, introduce a simple, elegant animation—like a softly glowing circle—that expands on the inhale and contracts on the exhale, visually guiding the user's breath.
-- **Why it's great:** Provides a powerful visual anchor for mindfulness, transforming the breathing exercise into a more profound experience for visual learners.
-- **Keeping it simple:** A CSS animation or a simple React component that controls the scale of a div, timed to a typical breath cycle.
+- **The Idea:** **[Implemented]** The central Triangle logo now gently pulses ("breathes") during the ceremony.
+- **Why it's great:** Provides a powerful visual anchor for mindfulness.
+- **How it's implemented:** The `TrianglePhaseIcon` component uses a CSS animation (`animate-soft-pulse`) to rhythmic expand and contract, serving as a visual focus point during the Pause and Open phases.
 
 ### 6. Interactive Space Blessing with Gemini Vision
 - **The Idea:** Allow the user to optionally use their camera to share a picture of their cacao or their quiet space. The Gemini vision model could then offer a unique, gentle observation or blessing about it.

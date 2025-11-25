@@ -17,7 +17,7 @@ export const generateSpeech = async (text: string): Promise<string> => {
         const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-preview-tts",
-            contents: [{ parts: [{ text: `Speak in a calm, gentle, and slow-paced voice: ${text}` }] }],
+            contents: [{ parts: [{ text: `Speak in a soft, whispery, and soothing voice suitable for meditation: ${text}` }] }],
             config: {
                 responseModalities: [Modality.AUDIO],
                 speechConfig: {

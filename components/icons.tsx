@@ -1,5 +1,27 @@
 import React from 'react';
 
+export const JoinLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    {/* The Plain Triangle (Structure) */}
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3L20.5 19H3.5L12 3Z" />
+  </svg>
+);
+
+export const WelcomeTriangleIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 130" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+     <style>
+      {`.label-text { font-size: 10px; font-weight: 600; letter-spacing: 0.15em; fill: currentColor; stroke: none; text-anchor: middle; font-family: 'Poppins', sans-serif; text-transform: uppercase; }`}
+    </style>
+    {/* The Triangle */}
+    <path strokeLinecap="round" strokeLinejoin="round" d="M70 30 L105 90 H35 L70 30Z" vectorEffect="non-scaling-stroke" />
+    
+    {/* Labels at Vertices */}
+    <text x="70" y="20" className="label-text">Discover</text>
+    <text x="35" y="105" className="label-text">Pause</text>
+    <text x="105" y="105" className="label-text">Open</text>
+  </svg>
+);
+
 export const CacaoPodIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M15.5 2C13.25 2 11.33 3.69 11.05 6.02C10.79 8.21 12.04 10.13 13.96 10.95C14.63 11.24 15.21 11.66 15.66 12.17C15.93 12.48 16.15 12.86 16.29 13.29C16.39 13.61 16.44 13.95 16.44 14.3C16.44 15.58 15.61 16.69 14.5 17.16C12.78 17.91 11 17.2 11 15C11 14.41 11.16 13.85 11.45 13.36C12.42 11.72 11.39 9.61 9.61 9.05C6.23 7.99 3.99 10.82 5.06 14.21C6.23 17.89 9.94 20.48 13.86 19.89C18.6 19.19 22 15.15 22 10.5C22 5.81 19.19 2 15.5 2Z" />
@@ -54,3 +76,39 @@ export const InstagramIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) =>
         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44c0-.795-.645-1.44-1.441-1.44z" />
     </svg>
 );
+
+export const TrianglePhaseIcon: React.FC<{ phase: 'pause' | 'open' | 'discover'; className?: string }> = ({ phase, className = '' }) => {
+    // Opacity logic for the phases
+    const isOpen = phase === 'open' || phase === 'discover';
+    const isDiscover = phase === 'discover';
+  
+    return (
+      <svg viewBox="0 0 100 100" className={`overflow-visible ${className}`} fill="none" stroke="currentColor" strokeWidth="3">
+         {/* Bottom Line (Base) - Represents Pause (Always Visible) */}
+        <path 
+            d="M 20 80 L 80 80" 
+            className="transition-all duration-1000 ease-in-out"
+            style={{ opacity: 1, strokeLinecap: 'round' }}
+        />
+        
+        {/* Left and Right Sides - Represents Open */}
+        <path 
+            d="M 20 80 L 50 20 L 80 80" 
+            className="transition-all duration-1000 ease-in-out"
+            style={{ opacity: isOpen ? 1 : 0.2, strokeLinecap: 'round', strokeLinejoin: 'round' }}
+        />
+  
+        {/* Center Glow/Fill - Represents Discover */}
+        <path 
+            d="M 50 35 L 35 70 L 65 70 Z" 
+            fill="currentColor" 
+            stroke="none"
+            className="transition-all duration-1000 ease-in-out"
+            style={{ opacity: isDiscover ? 0.6 : 0 }}
+        />
+        
+         {/* Central "Light" Dot (Optional subtle detail) */}
+         <circle cx="50" cy="55" r="3" fill="currentColor" className="transition-opacity duration-1000" style={{ opacity: isDiscover ? 1 : 0 }} />
+      </svg>
+    );
+};

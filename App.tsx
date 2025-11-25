@@ -5,7 +5,7 @@ import IntentionScreen from './components/IntentionScreen';
 import PreparationScreen from './components/PreparationScreen';
 import CeremonyFlow from './components/CeremonyFlow';
 import ClosingScreen from './components/ClosingScreen';
-import { CacaoPodIcon } from './components/icons';
+import { JoinLogoIcon } from './components/icons';
 import AudioToggleButton from './components/AudioToggleButton';
 
 const App: React.FC = () => {
@@ -56,8 +56,8 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-[#4a3a32] text-[#fdf5e6] flex flex-col items-center p-4">
         <header className="fixed top-0 left-0 w-full p-6 flex items-center justify-between z-10 bg-[#4a3a32]/80 backdrop-blur-sm">
             <div className="flex items-center">
-                <CacaoPodIcon className="w-8 h-8 text-[#e4d5b7]" />
-                <h1 className="text-xl font-bold text-[#e4d5b7] ml-3 tracking-widest">Cacao Guide</h1>
+                <JoinLogoIcon className="w-8 h-8 text-[#e4d5b7]" />
+                <h1 className="text-xl font-bold text-[#e4d5b7] ml-3 tracking-widest">Join Cacao's Guide</h1>
             </div>
             <AudioToggleButton />
         </header>
